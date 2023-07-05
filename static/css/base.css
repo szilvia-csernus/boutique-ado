@@ -58,6 +58,28 @@ body {
     border: 1px solid black !important;
 }
 
+.bg-black {
+    background: black !important;
+}
+
+.display-4 {
+    font-size: 3rem;
+}
+
+ul {
+    margin-bottom: 0;
+}
+
+h4 {
+    font-size: 1.3rem;
+    font-weight: 300;
+    letter-spacing: .1rem;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
 /* -------------------------------- Media Queries */
 
 /* Slightly larger container on xl screens */
