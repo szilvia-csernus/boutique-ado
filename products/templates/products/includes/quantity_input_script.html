@@ -1,7 +1,7 @@
 <script type="text/javascript">
     
     function handleEnableDisable(itemId) {
-        const currentValue = parseeInt($(`#id_qty_${itemId}`).val());
+        const currentValue = parseInt($(`#id_qty_${itemId}`).val());
         let minusDisabled = currentValue < 2;
         let plusDisabled = currentValue > 98;
         $(`#decrement-qty_${itemId}`).prop('disabled', minusDisabled);
