@@ -11,15 +11,31 @@ def bag_contents(request):
     product_count = 0
     bag = request.session.get('bag', {})
     
-    for item_id, quantity in bag.items():
+    
+    for item_id, item_data in bag.items():
         product = get_object_or_404(Product, pk=item_id)
-        total += quantity * product.price
-        product_count += quantity
-        bag_items.append({
-            'item_id': item_id,
-            'quantity': quantity,
-            'product': product,
-        })
+        
+        if isinstance(item_data, int):
+            # If the item has no sizes
+            total += item_data * product.price
+            product_count += item_data
+            bag_items.append({
+                'item_id': item_id,
+                'quantity': item_data,
+                'product': product,
+            })
+        else:
+            # If the item has sizes
+            # item_data is a dictionary
+            for size, quantity in item_data['items_by_size'].items():
+                total += quantity * product.price
+                product_count += quantity
+                bag_items.append({
+                    'item_id': item_id,
+                    'quantity': quantity,
+                    'product': product,
+                    'size': size,
+                })
     
     if total < settings.FREE_DELIVERY_THRESHOLD:
         # Decimal is preferred over float for monetary values
