@@ -83,6 +83,10 @@ TEMPLATES = [
     },
 ]
 
+# This setting would be the default anyway but we're setting it for Gitpod
+# Sets the 'messages' to store in sessions.
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
+
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',

@@ -129,7 +129,19 @@
     </header>
 
     {% if messages %}
-    <div class="message-container"></div>
+    <div class="message-container">
+        {% for message in messages %}
+        {% if message.tags == 'error' %}
+        {% include 'includes/toasts/toast_error.html' %}
+        {% elif message.tags == 'info' %}
+        {% include 'includes/toasts/toast_info.html' %}
+        {% elif message.tags == 'warning' %}
+        {% include 'includes/toasts/toast_warning.html' %}
+        {% elif message.tags == 'success' %}
+        {% include 'includes/toasts/toast_success.html' %}
+        {% endif %}
+        {% endfor %}
+    </div>
     {% endif %}
 
     {% block page_header %}
@@ -139,6 +151,9 @@
     {% endblock %}
 
     {% block postloadjs %}
+    <script type="text/javascript">
+        $('.toast').toast('show');
+    </script>
     {% endblock %}
 
 
