@@ -3,10 +3,10 @@ from django.shortcuts import (
 )
 # from django.views.decorators.http import require_POST
 from django.contrib import messages
-# from django.conf import settings
+from django.conf import settings
 
 from .forms import OrderForm
-# from .models import Order, OrderLineItem
+from .models import Order, OrderLineItem
 
 from products.models import Product
 # from profiles.models import UserProfile
@@ -36,11 +36,11 @@ import json
 
 
 def checkout(request):
-    # stripe_public_key = settings.STRIPE_PUBLIC_KEY
+    stripe_public_key = settings.STRIPE_PUBLIC_KEY
     # stripe_secret_key = settings.STRIPE_SECRET_KEY
 
     # if request.method == 'POST':
-    #     bag = request.session.get('bag', {})
+    bag = request.session.get('bag', {})
 
     #     form_data = {
     #         'full_name': request.POST['full_name'],
@@ -98,7 +98,7 @@ def checkout(request):
     #                                  'Please double check your information.'))
     # else:
     #     bag = request.session.get('bag', {})
-        if not bag:
+    if not bag:
             messages.error(request,
                            "There's nothing in your bag at the moment")
             return redirect(reverse('products'))
@@ -131,21 +131,22 @@ def checkout(request):
         #     except UserProfile.DoesNotExist:
         #         order_form = OrderForm()
         # else:
-        order_form = OrderForm()
+    order_form = OrderForm()
 
     # if not stripe_public_key:
     #     messages.warning(request, ('Stripe public key is missing. '
     #                                'Did you forget to set it in '
     #                                'your environment?'))
 
-        template = 'checkout/checkout.html'
-        context = {
-            'order_form': order_form,
-            # 'stripe_public_key': stripe_public_key,
-            # 'client_secret': intent.client_secret,
-        }
+    template = 'checkout/checkout.html'
+    context = {
+        'order_form': order_form,
+        'stripe_public_key': stripe_public_key,
+        'client_secret': 'test_client_secret',
+        # 'client_secret': intent.client_secret,
+    }
 
-        return render(request, template, context)
+    return render(request, template, context)
 
 
 # def checkout_success(request, order_number):
