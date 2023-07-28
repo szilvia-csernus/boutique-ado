@@ -25,7 +25,7 @@ class OrderAdmin(admin.ModelAdmin):
               'stripe_pid')
 
     list_display = ('order_number', 'date', 
-                    # 'full_name',
+                    'full_name',
                     'order_total', 'delivery_cost',
                     'grand_total',)
 
