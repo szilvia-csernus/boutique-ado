@@ -17,7 +17,6 @@ import stripe
 import json
 
 
-
 @require_POST
 def cache_checkout_data(request):
     """ Save checkout data if the user clicks the checkbox to 
@@ -59,6 +58,9 @@ def checkout(request):
 
         order_form = OrderForm(form_data)
         if order_form.is_valid():
+            # For optimazation, we prevent the first 'save' of the order from
+            # being committed to the database until we have added the additional
+            # info to the order. This is done by setting commit=False
             order = order_form.save(commit=False)
             pid = request.POST.get('client_secret').split('_secret')[0]
             order.stripe_pid = pid
