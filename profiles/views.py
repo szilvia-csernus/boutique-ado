@@ -33,7 +33,6 @@ def profile(request):
     }
 
     return render(request, template, context)
-    return render(request, 'profiles/profile.html', {'profile': profile})
 
 
 def order_history(request, order_number):
