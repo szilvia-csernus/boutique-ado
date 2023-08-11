@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
 import os
 
 load_dotenv() # This will load the .env file variables into the environment
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'products',
     'bag',
     'checkout',
+    'profiles',
     
     # Others
     'crispy_forms',
