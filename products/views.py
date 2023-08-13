@@ -85,7 +85,7 @@ def add_product(request):
             # Display a success message
             messages.success(request, 'Successfully added product!')
             # Redirect the user to the product detail page
-            return redirect(reverse('add_product'))
+            return redirect(reverse('product_detail', args=[product.id]))
         else:
             # Display an error message
             messages.error(request, 'Failed to add product. Please ensure the form is valid.')
@@ -125,3 +125,11 @@ def edit_product(request, product_id):
     }
     
     return render(request, template, context)
+
+
+def delete_product(request, product_id):
+    """ Delete a product from the store """
+    product = get_object_or_404(Product, pk=product_id)
+    product.delete()
+    messages.success(request, 'Product deleted!')
+    return redirect(reverse('products'))
