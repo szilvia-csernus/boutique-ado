@@ -33,7 +33,7 @@ DEBUG = "DEVELOPMENT" in os.environ
 
 ALLOWED_HOSTS = [
     'https://boutique-ado-szilvi-2fd795c876ac.herokuapp.com/',
-    'localhost',
+    'localhost'
 ]
 
 
