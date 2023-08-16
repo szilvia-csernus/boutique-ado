@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import dj_database_url # This is needed for Heroku
 
 load_dotenv() # This will load the .env file variables into the environment
 
@@ -30,7 +31,10 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # DEBUG = True
 DEBUG = "DEVELOPMENT" in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://boutique-ado-szilvi-2fd795c876ac.herokuapp.com/',
+    'localhost',
+]
 
 
 # Application definition
@@ -127,12 +131,17 @@ WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'DATABASE_URL' in os.environ: 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.parse( os.environ.get('DATABASE_URL', '') )
+    }
 
 
 # Password validation
@@ -194,3 +203,5 @@ STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', '')
 STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', '')
 STRIPE_WH_SECRET = os.getenv('STRIPE_WH_SECRET', '')
 DEFAULT_FROM_EMAIL = 'boutiqueado@example.com'
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
