@@ -114,9 +114,6 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1 # This is needed for the allauth templates to work
 
-# This is needed for the allauth templates to work
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 # These are all needed for the allauth templates to work
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email' 
 ACCOUNT_EMAIL_REQUIRED = True 
@@ -230,4 +227,17 @@ if 'USE_AWS' in os.environ:
     # Override static and media URLs in production
     STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{STATICFILES_LOCATION}/'
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIAFILES_LOCATION}/'
+    
+    
+if 'DEVELOPMENT' in os.environ:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FROM_EMAIL = 'boutiqueado@example.com'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
+    DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+    EMAIL_PORT = 587
     
